@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/templates/template.xhtml">
+	<ui:define name="title">
+		<!-- <h:outputText value="#{mensajesGlosaCuenta.lblGestionGlosas}" />-->
+	</ui:define>
+	<ui:define name="content">
+		<f:loadBundle basename="i18n.msg-glosa-cuenta"
+			var="mensajesGlosaCuenta" />
+		<h:form id="form1">
+			<p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"/>
+
+			<br />
+
+			<p:panelGrid columns="1">
+
+				<h3>Registro de Facturas</h3>
+
+
+				<p:panelGrid id="contFact">
+					<p:row>
+						<p:column>
+							<h:outputText value="Nº Factura" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{facturaUI.entity.numFactura}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Comprador" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{facturaUI.entity.nombreComprador}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="Iva" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{facturaUI.entity.valorIva}" />
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+						<p:column colspan="4">
+
+							<p:panelGrid id="tblDetalle" columns="2" style="width:100%">
+
+								<h:outputText value="Descripción" />
+								<h:outputText value="Valor" />
+								<p:inputText value="#{facturaUI.item.descripcion}" />
+								<p:inputText value="#{facturaUI.item.valorItem}" />
+
+
+
+							</p:panelGrid>
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="4">
+							<h:panelGrid columns="2">
+								<p:commandLink value="Agregar Producto" process="@form"
+									update=":form1:tablaDetalle:,:form1:tblDetalle,:form1:ptotales,growl"
+									actionListener="#{facturaUI.adicionarProducto}" />
+								<span class="ui-icon ui-icon-circle-plus" />
+							</h:panelGrid>
+
+
+						</p:column>
+					</p:row>
+
+
+				</p:panelGrid>
+				<p:dataTable id="tablaDetalle" var="row"
+					value="#{facturaUI.listItems}">
+					<p:column headerText="Descripcion Item">
+						<h:outputText value="#{row.descripcion}" />
+					</p:column>
+
+					<p:column headerText="Valor Item">
+						<h:outputText value="#{row.valorItem}" />
+					</p:column>
+
+					<p:column headerText="">
+						<h:panelGrid columns="2">
+							<p:commandLink value="Eliminar" process="@form"
+								actionListener="#{facturaUI.actionEliminar(row)}"
+								update=":form1:tablaDetalle,:form1:ptotales,:form1:growl">
+
+							</p:commandLink>
+							<span class="ui-icon ui-icon-circle-minus" />
+						</h:panelGrid>
+					</p:column>
+
+				</p:dataTable>
+
+
+				<p:panelGrid style="float:right" id="ptotales">
+
+					<p:row>
+						<p:column>
+							<h:outputText value="Valor Compra" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{facturaUI.detalleTotales.valorTotal}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="IVA" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{facturaUI.detalleTotales.valorIva}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Valor TOTAL" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{facturaUI.detalleTotales.valorNeto}" />
+						</p:column>
+
+					</p:row>
+				</p:panelGrid>
+				<p:commandButton value="#{mensajesGlosaCuenta.lblBtnGuardar}"
+					process="@form"
+					update=":form1:tablaDetalle:,:form1:tblDetalle,:form1:ptotales,:form1:contFact,growl"
+					actionListener="#{facturaUI.actionGuardarFactura}" />
+			</p:panelGrid>
+
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

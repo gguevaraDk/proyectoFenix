@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>Sistema de Control y Seguimiento al Plan Curricular de
+		Cursos</title>
+	<div align="center">
+		<img class="header-picture"
+			src="#{request.contextPath}/images/headerUniajc.jpg" />
+	</div>
+</h:head>
+
+<body>
+
+	<form id="loginForm" name="loginForm" action="j_spring_security_check"
+		method="post">
+
+		<f:loadBundle basename="i18n.msg-menu" var="msgMenu" />
+		<br /> <br /> <br />
+		<div align="center">
+			<h:outputText styleClass="important" value="#{msgMenu.tituloLogin}"></h:outputText>
+			<table>
+				<tr>
+					<td><h:graphicImage value="images/i_menu_solcaso.gif" /> <h:outputText
+							styleClass="label" value="#{msgMenu.login}" /></td>
+					<td><input id="usernameField" type="text" name="j_username"
+						value="#{SPRING_SECURITY_LAST_USERNAME}" /></td>
+				</tr>
+				<tr>
+					<td><h:graphicImage value="images/i_menu_clave.gif" /> <h:outputText
+							styleClass="label" id="lblPassword" value="#{msgMenu.pass}" /></td>
+					<td><input id="passwordField" type="password"
+						name="j_password" /></td>
+				</tr>
+			</table>
+
+			<input type="submit" value="Login" class="boton_app" />
+		</div>
+
+		<div align="center">
+			<h:outputText rendered="${param.authfailed eq 'true'}"
+				value="#{msgMenu.authfail}" styleClass="importantError" />
+		</div>
+
+	</form>
+
+</body>
+
+</html>

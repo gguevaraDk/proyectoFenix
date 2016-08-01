@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="pmz-primefaces-web">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="pmz-primefaces-config-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmz-primefaces-config/pmz-primefaces-config">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pmz-primefaces-service-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmz-primefaces-service/pmz-primefaces-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pmz-primefaces-modelo-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmz-primefaces-modelo/pmz-primefaces-modelo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pmz-primefaces-dao-hbxml-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmz-primefaces-dao-hbxml/pmz-primefaces-dao-hbxml">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="pmz-primefaces-api-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/pmz-primefaces-api/pmz-primefaces-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="pmz-primefaces-web"/>
+        <property name="java-output-path" value="/pmz-primefaces-web/target/classes"/>
+    </wb-module>
+</project-modules>

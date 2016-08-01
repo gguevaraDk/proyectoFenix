@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- value="create" to build a new database on each run; value="update" 
+			to modify an existing database; value="create-drop" means the same as "create" 
+			but also drops tables when Hibernate closes; value="validate" makes no changes 
+			to the database -->
+<!-- 		<property name="hibernate.hbm2ddl.auto">create</property> -->
+		<property name="hibernate.connection.charSet">UTF-8</property>
+		<property name="hibernate.connection.autocommit">false</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<!-- <property name="hibernate.default_schema">SALUDMPDB2</property> -->
+		<!-- <property name="hibernate.dialect">org.hibernate.dialect.DB2400Dialect</property> -->
+	</session-factory>
+</hibernate-configuration>

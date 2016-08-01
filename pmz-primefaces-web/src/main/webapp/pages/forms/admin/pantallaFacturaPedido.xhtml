@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/templates/template.xhtml">
+	<ui:define name="title">
+		<!-- <h:outputText value="#{mensajesGlosaCuenta.lblGestionGlosas}" />-->
+	</ui:define>
+	<ui:define name="content">
+		<f:loadBundle basename="i18n.msg-glosa-cuenta"
+			var="mensajesGlosaCuenta" />
+		<h:form id="form1">
+			<p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true" />
+
+			<br />
+
+			<p:panelGrid columns="1">
+
+				<h3>Registro de Facturas</h3>
+
+
+				<p:panelGrid id="contFact">
+					<p:row>
+						<p:column>
+							<h:outputText value="Nº Factura" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{facturaPedidoUI.entity.numFactura}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Cliente" />
+						</p:column>
+						<p:column colspan="3">
+							<p:inputText value="#{facturaPedidoUI.entity.nombreComprador}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Aplica Iva" />
+						</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox value="#{facturaPedidoUI.useSelect}" >
+							   <p:ajax update="campoIva" event="change"/>
+							</p:selectBooleanCheckbox>
+						</p:column>
+
+						<p:column>
+							<h:outputText value="Iva" />
+						</p:column>
+						<p:column>
+							<p:inputText  disabled="#{!facturaPedidoUI.useSelect}" value="#{facturaPedidoUI.entity.valorIva}"  id="campoIva"/>
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Ciudad" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="ciudad"
+								value="#{facturaPedidoUI.entity.ciudad.id}" effect="fold">
+								<f:selectItems value="#{facturaPedidoUI.listCiudades}"
+									var="ciudad" itemValue="#{ciudad.id}"
+									itemLabel="#{ciudad.nombreCiudad}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+						<p:column colspan="4">
+
+							<p:panelGrid id="tblDetalle" columns="2" style="width:100%">
+
+								<h:outputText value="Descripción" />
+								<h:outputText value="Cantidad" />
+								<p:selectOneMenu id="producto"
+								value="#{facturaPedidoUI.entityProducto.idProducto}" effect="fold">
+								<f:selectItems value="#{facturaPedidoUI.listProductos}"
+									var="producto" itemValue="#{producto.idProducto}"
+									itemLabel="#{producto.descripcion} - $#{producto.valor}" />
+							</p:selectOneMenu>
+								<p:inputText value="#{facturaPedidoUI.entityProductoCompra.cantidad}" />
+
+
+
+							</p:panelGrid>
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="4">
+							<h:panelGrid columns="2">
+								<p:commandLink value="Agregar Producto" process="@form"
+									update=":form1:tablaDetalle:,:form1:tblDetalle,:form1:ptotales,growl"
+									actionListener="#{facturaPedidoUI.adicionarProducto}" />
+								<span class="ui-icon ui-icon-circle-plus" />
+							</h:panelGrid>
+
+
+						</p:column>
+					</p:row>
+
+
+				</p:panelGrid>
+				<p:dataTable id="tablaDetalle" var="row"
+					value="#{facturaPedidoUI.listItems}">
+					<p:column headerText="Descripcion Item">
+						<h:outputText value="#{row.id.producto.descripcion}" />
+					</p:column>
+
+					<p:column headerText="Valor Unitario">
+						<h:outputText value="#{row.id.producto.valor}" />
+					</p:column>
+					<p:column headerText="Cantidad">
+						<h:outputText value="#{row.cantidad}" />
+					</p:column>
+					<p:column headerText="Total">
+						<h:outputText value="#{row.id.producto.valor * row.cantidad}" />
+					</p:column>
+
+					<p:column headerText="">
+						<h:panelGrid columns="4">
+							<p:commandLink value="Eliminar" process="@form"
+								actionListener="#{facturaPedidoUI.actionEliminar(row)}"
+								update=":form1:tablaDetalle,:form1:ptotales,:form1:growl">
+
+							</p:commandLink>
+							<span class="ui-icon ui-icon-circle-minus" />
+						</h:panelGrid>
+					</p:column>
+
+				</p:dataTable>
+
+
+				<p:panelGrid style="float:right" id="ptotales">
+
+					<p:row>
+						<p:column>
+							<h:outputText value="Valor Compra" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{facturaPedidoUI.detalleTotales.valorTotal}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="IVA" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{facturaPedidoUI.detalleTotales.valorIva}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="Valor TOTAL" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{facturaPedidoUI.detalleTotales.valorNeto}" />
+						</p:column>
+
+					</p:row>
+				</p:panelGrid>
+				<p:commandButton value="#{mensajesGlosaCuenta.lblBtnGuardar}"
+					process="@form"
+					update=":form1:tablaDetalle:,:form1:tblDetalle,:form1:ptotales,:form1:contFact,growl"
+					actionListener="#{facturaUI.actionGuardarFactura}" />
+			</p:panelGrid>
+
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

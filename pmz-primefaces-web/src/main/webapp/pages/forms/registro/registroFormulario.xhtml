@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/templates/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{msgRegistro.lblEjePrograma}" />
+	</ui:define>
+	<ui:define name="content">
+		<f:loadBundle basename="i18n.msg-registro" var="msgRegistro" />
+		<f:loadBundle basename="i18n.messages" var="msg" />
+		<h:form id="form1">
+			<p:growl id="messages" globalOnly="true" sticky="true" />
+
+			<p:panel>
+				<div align="right">
+					<p:panelGrid columns="2">
+						<h:outputText value="#{msgRegistro.lblControlesPendientes}:" />
+						<p:selectOneMenu
+							value="#{registroFormularioUI.formularioDTO.pendiente}">
+							<f:selectItem itemLabel="Seleccione..." itemValue="" />
+							<f:selectItems itemLabel="#{row}" itemValue="#{row}" var="row"
+								value="#{registroFormularioUI.listaPendientes}"></f:selectItems>
+
+							<p:ajax event="change" process="@this"
+								listener="#{registroFormularioUI.cambioPendiente}"
+								update="@form"></p:ajax>
+						</p:selectOneMenu>
+
+					</p:panelGrid>
+				</div>
+
+
+				<p:panelGrid columns="10"
+					rendered="#{registroFormularioUI.mostrarPanelPrincipal}">
+
+					<h:outputText value="#{msgRegistro.lblFacultad}:" />
+					<p:selectOneMenu
+						value="#{registroFormularioUI.formularioDTO.facultad}">
+						<f:selectItem itemLabel="Seleccione..." itemValue="" />
+						<f:selectItems itemLabel="#{row.nombre}" itemValue="#{row.nombre}"
+							var="row" value="#{registroFormularioUI.listaFacultades}"></f:selectItems>
+
+						<p:ajax event="change" process="@this"
+							listener="#{registroFormularioUI.seleccionPrograma}"
+							update=":form1:idProgramas"></p:ajax>
+					</p:selectOneMenu>
+
+					<h:outputText value="#{msgRegistro.lblPrograma}:" />
+					<p:selectOneMenu id="idProgramas"
+						value="#{registroFormularioUI.formularioDTO.programa}">
+						<f:selectItem itemLabel="Seleccione..." itemValue="" />
+						<f:selectItems itemLabel="#{row.nombre}" itemValue="#{row.nombre}"
+							var="row" value="#{registroFormularioUI.listaProgramaSelecion}"></f:selectItems>
+					</p:selectOneMenu>
+
+					<h:outputText value="#{msgRegistro.lblDocente}:" />
+					<p:inputText
+						value="#{registroFormularioUI.formularioDTO.nombreDocente}"
+						maxlength="25" />
+					<h:outputText value="#{msgRegistro.lblMateria}:" />
+					<p:selectOneMenu
+						value="#{registroFormularioUI.formularioDTO.materia}">
+						<f:selectItem itemLabel="Seleccione..." itemValue="" />
+						<f:selectItems itemLabel="#{row}" itemValue="#{row}" var="row"
+							value="#{registroFormularioUI.listaMaterias}"></f:selectItems>
+
+						<p:ajax event="change" process="@this"
+							listener="#{registroFormularioUI.escogerTema}"
+							update=":form1:idTemas"></p:ajax>
+					</p:selectOneMenu>
+					<h:outputText value="#{msgRegistro.lblTemas}:" />
+
+					<p:selectCheckboxMenu id="idTemas"
+						value="#{registroFormularioUI.formularioDTO.listaTemas}"
+						label="Seleccion" filter="true" filterMatchMode="startsWith"
+						panelStyle="width:280px">
+						<f:selectItems value="#{registroFormularioUI.listaTemasEscogidos}"
+							var="row" itemLabel="#{row}" itemValue="#{row}" />
+					</p:selectCheckboxMenu>
+
+
+				</p:panelGrid>
+				<div align="center">
+					<p:panelGrid columns="8"
+						rendered="#{registroFormularioUI.mostrarPanelPrincipal}">
+						<h:outputText value="#{msgRegistro.lblPeriodo}:" />
+						<p:selectOneMenu
+							value="#{registroFormularioUI.formularioDTO.periodo}">
+							<f:selectItem itemLabel="Seleccione..." itemValue="" />
+							<f:selectItems itemLabel="#{row}" itemValue="#{row}" var="row"
+								value="#{registroFormularioUI.listaPeriodos}"></f:selectItems>
+						</p:selectOneMenu>
+
+
+						<h:outputText value="#{msgRegistro.lblGrupo}:" />
+						<p:selectOneMenu
+							value="#{registroFormularioUI.formularioDTO.grupo}">
+							<f:selectItem itemLabel="Seleccione..." itemValue="" />
+							<f:selectItems itemLabel="#{row}" itemValue="#{row}" var="row"
+								value="#{registroFormularioUI.listaGrupos}"></f:selectItems>
+						</p:selectOneMenu>
+
+
+						<h:outputText value="#{msgRegistro.lblFecha}:" />
+						<p:calendar id="fecha"
+							value="#{registroFormularioUI.formularioDTO.fecha}"
+							navigator="true" pattern="dd/MM/yyyy" maxlength="10" size="11"></p:calendar>
+
+					</p:panelGrid>
+
+
+					<p:panelGrid columns="2"
+						rendered="#{registroFormularioUI.mostrarPanelPrincipal}">
+
+						<p:commandButton value="#{msgRegistro.btnGenerar}" process="@form"
+							update="@form"
+							actionListener="#{registroFormularioUI.condensarInformacion}" />
+						<p:commandButton value="#{msgRegistro.btnLimpiar}" process="@form"
+							update="@form" actionListener="#{registroFormularioUI.init}" />
+
+					</p:panelGrid>
+				</div>
+			</p:panel>
+			<p:panel rendered="#{registroFormularioUI.realizoGeneracion}">
+
+				<p:panelGrid columns="1">
+					<p:dataTable id="idTable" var="table"
+						value="#{registroFormularioUI.listaRegistros}" paginator="true"
+						emptyMessage="#{msg.lblNoExistenRegistros}" editable="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{currentPage} de {totalPages}"
+						rowsPerPageTemplate="10,20,30,50" paginatorPosition="bottom"
+						rows="10" scrollable="true">
+						<p:column headerText="#{msgRegistro.lblFecha}" exportable="false"
+							style="text-align:center" width="70">
+
+							<h:outputText value="#{table.fecha}">
+								<f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="America/Bogota" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgRegistro.lblHoras}" exportable="false"
+							style="text-align:center">
+
+							<h:outputText value="#{table.horas}" />
+						</p:column>
+						<p:column headerText="#{msgRegistro.lblSemana}" exportable="false"
+							style="text-align:center">
+							<h:outputText value="#{table.semana}" />
+						</p:column>
+						<p:column headerText="#{msgRegistro.lblMateria}"
+							exportable="false" style="text-align:center">
+							<h:outputText value="#{table.materia}" />
+						</p:column>
+
+						<p:column headerText="#{msgRegistro.lblTemas}" exportable="false"
+							style="text-align:center" width="200">
+
+							<h:outputText value="#{table.listaTemas}" />
+						</p:column>
+
+						<p:column headerText="#{msgRegistro.lblFirmaDocente}"
+							exportable="false" style="text-align:center">
+							<p:selectBooleanCheckbox
+								value="#{registroFormularioUI.formularioDTO.firmaDocente}"></p:selectBooleanCheckbox>
+
+
+						</p:column>
+						<p:column headerText="#{msgRegistro.lblFirmaRepresentante}"
+							exportable="false" style="text-align:center">
+							<p:selectBooleanCheckbox
+								value="#{registroFormularioUI.formularioDTO.firmaDocente}"></p:selectBooleanCheckbox>
+
+						</p:column>
+
+						<p:column headerText="#{msgRegistro.lblObservaciones}"
+							exportable="false" style="text-align:center">
+							<p:inputTextarea cols="15" rows="3"
+								value="#{registroFormularioUI.formularioDTO.observaciones}"
+								maxlength="100"></p:inputTextarea>
+
+
+						</p:column>
+
+					</p:dataTable>
+				</p:panelGrid>
+
+
+
+			</p:panel>
+			<div align="center">
+				<p:commandButton id="fuck" value="Guardar" process="@this"
+					rendered="#{registroFormularioUI.realizoGeneracion}"
+					actionListener="#{registroFormularioUI.pruebaInsercion()}"
+					update="@form">
+				</p:commandButton>
+			</div>
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

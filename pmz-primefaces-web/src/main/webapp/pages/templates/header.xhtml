@@ -1,0 +1,65 @@
+<div id="logo" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" class="fondoHeader"
+	align="center">
+	<table width="100%" align="center" cellspacing="0" cellpadding="0"
+		border="0" style="height: 100%; background: transparent;">
+		<tr>
+			<td colspan="3"><br /></td>
+		</tr>
+		<tr>
+			<td width="100px;"></td>
+			<td align="center">
+				<h1 class="texto1">
+					<ui:insert name="title"></ui:insert>
+				</h1>
+			</td>
+			<td valign="top" width="50px;" align="center">
+				<table border="0" cellspacing="0" cellpadding="0"
+					style="background: transparent;">
+					<tr>
+						<td align="center"><h:form>
+							</h:form></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<h:form>
+		<h:commandLink action="#{trazaUI.mostrarPopupDetalleError}"
+			rendered="#{trazaUI.enlacePopupDetalleErrorVisible}">
+			<h:outputText value="Detalle del error" />
+		</h:commandLink>
+		<p:dialog visible="#{trazaUI.popupDetalleErrorVisible}" modal="true"
+			id="popupDetalleError" styleClass="popupDetalleError">
+			<f:facet name="header">
+				<div class="cabezote">
+					<div class="titulo">
+						<h:outputText value="Detalle del error" />
+					</div>
+					<div class="iconoCerrar">
+						<h:commandLink action="#{trazaUI.cerrarPopupDetalleError}">
+							<h:graphicImage url="../../images/close.png" height="16"
+								width="16" />
+						</h:commandLink>
+					</div>
+				</div>
+			</f:facet>
+			<div id="cntTraza">
+				<div class="msg-error">
+					<h:outputText
+						value="Ha ocurrido un error en la ultima transaccion realizada." />
+				</div>
+				<div class="traza">
+					<h:outputText value="#{trazaUI.traza}" />
+				</div>
+				<div class="botones">
+					<h:commandButton styleClass="boton_app"
+						action="#{trazaUI.cerrarPopupDetalleError}" value="Cerrar" />
+				</div>
+			</div>
+		</p:dialog>
+	</h:form>
+</div>

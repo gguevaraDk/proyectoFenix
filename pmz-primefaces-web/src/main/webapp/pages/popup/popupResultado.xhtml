@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<h:panelGrid rendered="#{popupResultadoUI.globalErrors}"  
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:form id="frmPopupResultado">
+		<h:panelGroup>
+			<div id="popResultado" class="icePnlCnf" style="width:400px; border:4px solid #d9d9d9;">
+
+			<table cellpadding="0" cellspacing="0" width="100%" id="tblResultado">
+				<tr>
+					<td class="icePnlCnfHdr" colspan="2"><h:outputText value="#{msg.panelResultadoTitle}" /></td>
+				</tr>
+				<tr>
+					<td class="icePnlCnfBody"><h:graphicImage style="border:0" url="#{popupResultadoUI.messageImage}"/></td>
+					<td class="icePnlCnfBody"><h:messages id="msgsPopup" globalOnly="true" layout="table" /></td>
+				</tr>
+				<tr>
+					<td class="icePnlCnfBtns" colspan="2">
+					<div align="center"><h:panelGrid cellpadding="3">
+
+						<h:commandLink id="popResultado-accept" styleClass="boton_app" value="#{msg.panelConfirmationAcceptButton}"
+							onclick="document.getElementById('popResultado').style.display='none'; return false;" rendered="#{!popupResultadoUI.severitySucess}"/>
+							
+						<h:commandLink id="popResultado2-accept" styleClass="boton_app" value="#{msg.panelConfirmationAcceptButton}"
+							onclick="document.getElementById('popResultado').style.display='none';" rendered="#{popupResultadoUI.severitySucess}"/>	
+					</h:panelGrid></div>
+					</td>
+				</tr>
+			</table>
+			</div>
+		</h:panelGroup>
+	</h:form>
+	<script>
+		function activarPopup() {
+			if (document.getElementById('popResultado')) {
+// 				Ice.autoCentre.start('popResultado');
+				document.getElementById('popResultado').style.display = 'inline';
+			}
+		}
+		activarPopup();		
+		
+	</script>
+</h:panelGrid>

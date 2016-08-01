@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/pages/templates/template.xhtml">
+	<ui:define name="title">
+		<!-- <h:outputText value="#{mensajesGlosaCuenta.lblGestionGlosas}" />-->
+	</ui:define>
+	<ui:define name="content">
+		<f:loadBundle basename="i18n.msg-glosa-cuenta"
+			var="mensajesGlosaCuenta" />
+		<h:form id="form1">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+
+			<br />
+
+			<p:panelGrid columns="1"></p:panelGrid>
+			<p:panelGrid columns="1">
+
+				<h3>#{mensajesGlosaCuenta.lblGestionGlosas}</h3>
+
+
+				<p:panelGrid id="dps">
+
+					<p:row>
+						<p:column>
+							<h:outputText value="#{mensajesGlosaCuenta.lblNumCuenta}" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{glosaUI.entity.numCuenta}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{mensajesGlosaCuenta.lblMotivo}" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="motivo" value="#{glosaUI.entity.motivo.id}"
+								effect="fold">
+								<f:selectItems value="#{glosaUI.listMotivos}" var="motivo"
+									itemValue="#{motivo.id}" itemLabel="#{motivo.nombreMotivo}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText value="#{mensajesGlosaCuenta.lblObservacion}" />
+						</p:column>
+						<p:column>
+							<p:inputTextarea value="#{glosaUI.entity.observacion}" rows="6"
+								cols="33" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="2">
+							<p:panelGrid columns="4">
+								<f:facet name="header">
+									<h:outputText value="#{mensajesGlosaCuenta.lblValores}" />
+								</f:facet>
+
+								<h:outputText value="#{mensajesGlosaCuenta.lblTotalCuenta}" />
+								<h:outputText value="#{mensajesGlosaCuenta.lblCobrado}" />
+								<h:outputText value="#{mensajesGlosaCuenta.lblAceptado}" />
+								<h:outputText value="#{mensajesGlosaCuenta.lblGlosado}" />
+								<p:inputText value="#{glosaUI.entity.totalCuenta}" />
+								<p:inputText value="#{glosaUI.entity.cobrado}" />
+								<p:inputText value="#{glosaUI.entity.aceptado}" />
+								<p:inputText value="#{glosaUI.entity.glosado}" />
+
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+
+
+
+				</p:panelGrid>
+
+				<p:commandButton value="#{mensajesGlosaCuenta.lblBtnGuardar}"
+					update=":form1:dps, growl" process="@form"
+					actionListener="#{glosaUI.guardarNuevaGlosa}" />
+
+			</p:panelGrid>
+
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

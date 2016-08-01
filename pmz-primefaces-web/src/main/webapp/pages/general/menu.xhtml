@@ -1,0 +1,16 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:f="http://java.sun.com/jsf/core">
+	<h:form  id="frmMenu">
+
+		<p:menubar height="26px">
+			<p:submenu label="Inicio" mode="ajax" icon="ui-icon-document">
+				<p:menuitem  value="Parametro" action="goParametro" />				
+				<p:menuitem  value="Salida" onclick="document.location.href='#{request.contextPath}/j_spring_security_logout'"/>
+			</p:submenu >
+		</p:menubar>		
+		
+
+	</h:form>
+</div>
