@@ -21,8 +21,8 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "perfiles_usuarios")
-public class PerfilesUsuario implements Serializable {
+@Table(name = "perfiles")
+public class Perfil implements Serializable {
 
 	/**
 	 * 
@@ -30,8 +30,7 @@ public class PerfilesUsuario implements Serializable {
 	private static final long serialVersionUID = 2837001156428782352L;
 
 	private Integer id;
-	// TODO perfil
-	private Usuario usuario;
+	private String nombre;
 
 	/**
 	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
@@ -39,8 +38,8 @@ public class PerfilesUsuario implements Serializable {
 	 * @return the id
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "perfiles_usuarios_id_seq")
-	@SequenceGenerator(name = "perfiles_usuarios_id_seq", sequenceName = "perfiles_usuarios_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "perfiles_id_seq")
+	@SequenceGenerator(name = "perfiles_id_seq", sequenceName = "perfiles_id_seq", allocationSize = 1)
 	@Column(name = "id")
 	public Integer getId() {
 		return id;
@@ -59,21 +58,21 @@ public class PerfilesUsuario implements Serializable {
 	/**
 	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
 	 * @since 28/07/2016
-	 * @return the usuario
+	 * @return the nombre
 	 */
-	@Column(name = "usuario_id")
-	public Usuario getUsuario() {
-		return usuario;
+	@Column(name = "nombre")
+	public String getNombre() {
+		return nombre;
 	}
 
 	/**
 	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
 	 * @since 28/07/2016
-	 * @param usuario
-	 *            the usuario to set
+	 * @param nombre
+	 *            the nombre to set
 	 */
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 }

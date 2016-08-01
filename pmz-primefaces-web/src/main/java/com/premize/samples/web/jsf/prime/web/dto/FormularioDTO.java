@@ -22,6 +22,9 @@ public class FormularioDTO implements Serializable {
 	private static final long serialVersionUID = 5963902288034272237L;
 
 	private String nombreDocente;
+	private String nombreVocero;
+	private String nombreDirector;
+	private String rol;
 	private String facultad;
 	private String materia;
 	private String periodo;
@@ -335,10 +338,67 @@ public class FormularioDTO implements Serializable {
 	/**
 	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
 	 * @since 31/07/2016
-	 * @param programa the programa to set
+	 * @param programa
+	 *            the programa to set
 	 */
 	public void setPrograma(String programa) {
 		this.programa = programa;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @return the nombreVocero
+	 */
+	public String getNombreVocero() {
+		return nombreVocero;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @param nombreVocero
+	 *            the nombreVocero to set
+	 */
+	public void setNombreVocero(String nombreVocero) {
+		this.nombreVocero = nombreVocero;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @return the nombreDirector
+	 */
+	public String getNombreDirector() {
+		return nombreDirector;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @param nombreDirector
+	 *            the nombreDirector to set
+	 */
+	public void setNombreDirector(String nombreDirector) {
+		this.nombreDirector = nombreDirector;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @return the rol
+	 */
+	public String getRol() {
+		return rol;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @param rol the rol to set
+	 */
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 
 }

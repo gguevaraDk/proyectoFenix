@@ -11,8 +11,8 @@
 		<mapping class="com.premize.samples.web.jsf.prime.modelo.Asignacion" />
 		<mapping class="com.premize.samples.web.jsf.prime.modelo.Inconsistencia" />
 		<mapping class="com.premize.samples.web.jsf.prime.modelo.Observacion" />
-		<mapping class="com.premize.samples.web.jsf.prime.modelo.Perfiles" />
-		<mapping class="com.premize.samples.web.jsf.prime.modelo.PerfilesUsuario" />
+		<mapping class="com.premize.samples.web.jsf.prime.modelo.Perfil" />
+		<mapping class="com.premize.samples.web.jsf.prime.modelo.PerfilUsuario" />
 		<mapping class="com.premize.samples.web.jsf.prime.modelo.Sesion" />
 		<mapping class="com.premize.samples.web.jsf.prime.modelo.Usuario" />
 		<mapping class="com.premize.samples.web.jsf.prime.modelo.Grupo" />

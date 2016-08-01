@@ -19,13 +19,16 @@ import com.premize.pmz.api.exception.AppBaseException;
 import com.premize.pmz.web.AbstractBaseMessageUI;
 import com.premize.samples.web.jsf.prime.facade.AsignaturaFacade;
 import com.premize.samples.web.jsf.prime.facade.FacultadFacade;
+import com.premize.samples.web.jsf.prime.facade.PerfilUsuarioFacade;
 import com.premize.samples.web.jsf.prime.facade.ProgramaFacade;
 import com.premize.samples.web.jsf.prime.facade.UsuarioFacade;
 import com.premize.samples.web.jsf.prime.modelo.Asignatura;
 import com.premize.samples.web.jsf.prime.modelo.Facultad;
+import com.premize.samples.web.jsf.prime.modelo.PerfilUsuario;
 import com.premize.samples.web.jsf.prime.modelo.Programa;
 import com.premize.samples.web.jsf.prime.modelo.Usuario;
 import com.premize.samples.web.jsf.prime.modelo.enums.TemasEnum;
+import com.premize.samples.web.jsf.prime.modelo.enums.TipoPerfilEnum;
 import com.premize.samples.web.jsf.prime.web.dto.FormularioDTO;
 
 /**
@@ -50,6 +53,8 @@ public class RegistroFormularioUI extends AbstractBaseMessageUI {
 	private FacultadFacade facultadFacade;
 	@ManagedProperty("#{programaFacade}")
 	private ProgramaFacade programaFacade;
+	@ManagedProperty("#{perfilUsuarioFacade}")
+	private PerfilUsuarioFacade perfilUsuarioFacade;
 
 	private FormularioDTO formularioDTO;
 	private List<String> listaGrupos;
@@ -66,6 +71,7 @@ public class RegistroFormularioUI extends AbstractBaseMessageUI {
 	private List<FormularioDTO> listaRegistros;
 	private boolean realizoGeneracion;
 	private boolean mostrarPanelPrincipal;
+	private PerfilUsuario perUsuario;
 
 	@PostConstruct
 	public void init() {
@@ -85,6 +91,7 @@ public class RegistroFormularioUI extends AbstractBaseMessageUI {
 		listaPeriodos.add("1");
 		listaPeriodos.add("2");
 		setListaTemas(Arrays.asList(TemasEnum.values()));
+		perUsuario = new PerfilUsuario();
 
 		seteoPendientes();
 		realizoGeneracion = false;
@@ -95,8 +102,57 @@ public class RegistroFormularioUI extends AbstractBaseMessageUI {
 			listaUsuarios = usuarioFacade.findByAll();
 			listaFacultades = facultadFacade.findByAll();
 			listaProgramas = programaFacade.findByAll();
+
+			encontralPerfil();
+
 		} catch (AppBaseException e) {
 			LOG.error("Error consutando los usuarios", e);
+		}
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @throws AppBaseException
+	 */
+	private void encontralPerfil() throws AppBaseException {
+		if (listaUsuarios != null && !listaUsuarios.isEmpty()) {
+
+			for (Usuario usuario : listaUsuarios) {
+				if (usuario.getCorreoElectronico().equals(getLogin())) {
+					perUsuario = perfilUsuarioFacade.encontrarPerfil(usuario);
+
+				}
+			}
+		}
+
+		seteoPerfil();
+
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 */
+	private void seteoPerfil() {
+		if (perUsuario != null) {
+
+			if (TipoPerfilEnum.Director.name().equals(
+					perUsuario.getPerfil().getNombre())) {
+
+				formularioDTO.setNombreDirector(perUsuario.getUsuario()
+						.getNombre());
+				formularioDTO.setRol(TipoPerfilEnum.Director.name());
+			} else if (TipoPerfilEnum.Docente.name().equals(
+					perUsuario.getPerfil().getNombre())) {
+				formularioDTO.setNombreDocente(perUsuario.getUsuario()
+						.getNombre());
+				formularioDTO.setRol(TipoPerfilEnum.Docente.name());
+			} else {
+				formularioDTO.setNombreVocero(perUsuario.getUsuario()
+						.getNombre());
+				formularioDTO.setRol(TipoPerfilEnum.Vocero.name());
+			}
 		}
 	}
 
@@ -139,6 +195,8 @@ public class RegistroFormularioUI extends AbstractBaseMessageUI {
 	 * @since 31/07/2016
 	 */
 	public void seleccionPrograma() {
+
+		listaProgramaSelecion = new ArrayList<Programa>();
 
 		if (listaProgramas != null && !listaProgramas.isEmpty()) {
 
@@ -592,6 +650,44 @@ public class RegistroFormularioUI extends AbstractBaseMessageUI {
 	 */
 	public void setListaProgramaSelecion(List<Programa> listaProgramaSelecion) {
 		this.listaProgramaSelecion = listaProgramaSelecion;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @return the perfilUsuarioFacade
+	 */
+	public PerfilUsuarioFacade getPerfilUsuarioFacade() {
+		return perfilUsuarioFacade;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @param perfilUsuarioFacade
+	 *            the perfilUsuarioFacade to set
+	 */
+	public void setPerfilUsuarioFacade(PerfilUsuarioFacade perfilUsuarioFacade) {
+		this.perfilUsuarioFacade = perfilUsuarioFacade;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @return the perUsuario
+	 */
+	public PerfilUsuario getPerUsuario() {
+		return perUsuario;
+	}
+
+	/**
+	 * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+	 * @since 1/08/2016
+	 * @param perUsuario
+	 *            the perUsuario to set
+	 */
+	public void setPerUsuario(PerfilUsuario perUsuario) {
+		this.perUsuario = perUsuario;
 	}
 
 }
