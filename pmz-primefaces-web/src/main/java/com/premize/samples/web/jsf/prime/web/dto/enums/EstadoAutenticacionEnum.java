@@ -4,14 +4,14 @@
 package com.premize.samples.web.jsf.prime.web.dto.enums;
 
 /**
- * @author <a href="mailto:cristian.arboleda@premize.com">Cristian M. Arboleda</a>
- * @project saludmp-oficinavirtual
+ * 
+ * @author <a href="mailto:gustavo guevara@premize.com">Gustavo Guevara</a>
+ * @project pmz-primefaces-web
  * @class EstadoAutenticacionEnum
- * @date 30/04/2013
+ * @since 1/08/2016
  *
  */
 public enum EstadoAutenticacionEnum {
 
-	
-	FALLO,EXITO;
+	FALLO, EXITO;
 }
